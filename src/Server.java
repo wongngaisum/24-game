@@ -119,41 +119,41 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
     }
 
     @Override
-    public Message login(String username, String password) throws RemoteException {
+    public RMIMessage login(String username, String password) throws RemoteException {
         int idx = usernameList.indexOf(username);
         if (idx != -1 && passwordList.get(idx).equals(password))
             if (isOnline(username))
-                return new Message("User has already logged in", false);
+                return new RMIMessage("User has already logged in", false);
             else {
                 setOnline(username);
-                return new Message("Logged in successfully", true);
+                return new RMIMessage("Logged in successfully", true);
             }
         else if (idx == -1)
-            return new Message("User does not exist", false);
+            return new RMIMessage("User does not exist", false);
         else
-            return new Message("Incorrect password", false);
+            return new RMIMessage("Incorrect password", false);
     }
 
     @Override
-    public Message register(String username, String password) throws RemoteException {
+    public RMIMessage register(String username, String password) throws RemoteException {
         int idx = usernameList.indexOf(username);
         if (idx == -1) {
             usernameList.add(username);
             passwordList.add(password);
             addNewUser(username, password);
             setOnline(username);
-            return new Message("Registered successfully", true);
+            return new RMIMessage("Registered successfully", true);
         } else
-            return new Message("Username has been used", false);
+            return new RMIMessage("Username has been used", false);
     }
 
     @Override
-    public Message logout(String username, String password) throws RemoteException {
+    public RMIMessage logout(String username, String password) throws RemoteException {
         int idx = usernameList.indexOf(username);
         if (idx != -1 && passwordList.get(idx).equals(password)) {
             setOffline(username);
-            return new Message("Logged out successfully", true);
+            return new RMIMessage("Logged out successfully", true);
         } else
-            return new Message("Failed to logout", false);
+            return new RMIMessage("Failed to logout", false);
     }
 }

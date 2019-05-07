@@ -2,20 +2,64 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f72ae35-b4a3-43ae-b54b-9b81f35d34d0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/gf_client.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/101.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/102.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/103.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/104.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/111.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/112.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/113.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/114.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/121.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/122.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/123.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/124.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/131.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/132.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/133.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/134.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/31.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/41.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/42.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/43.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/51.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/52.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/53.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/54.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/61.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/62.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/63.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/64.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/71.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/72.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/73.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/74.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/81.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/82.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/83.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/84.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/91.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/92.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/93.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/cards/94.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/JMSHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/Client$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/GamePanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/LeaderBoardPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/LoginPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/LogoutPanel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/Message.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/Panel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/RemoteInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/Server.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/24-game/UserProfilePanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/24-game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/24-game.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/24-game/META-INF/24-game.kotlin_module" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,7 +72,91 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/UserProfilePanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="943">
+              <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Card.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="621">
+              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+              <folding>
+                <element signature="e#548#549#0" expanded="true" />
+                <element signature="e#575#576#0" expanded="true" />
+                <element signature="e#612#613#0" expanded="true" />
+                <element signature="e#644#645#0" expanded="true" />
+                <element signature="e#672#673#0" expanded="true" />
+                <element signature="e#699#700#0" expanded="true" />
+                <element signature="e#736#737#0" expanded="true" />
+                <element signature="e#768#769#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/JMSHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5712" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="46">
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Server.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1817">
+              <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -66,7 +194,6 @@
         <option value="$PROJECT_DIR$/out/production/24-game/security.policy" />
         <option value="$PROJECT_DIR$/src/Message.java" />
         <option value="$PROJECT_DIR$/UserInfo.txt" />
-        <option value="$PROJECT_DIR$/src/RemoteInterface.java" />
         <option value="$PROJECT_DIR$/src/Panel.java" />
         <option value="$PROJECT_DIR$/src/GamePanel.java" />
         <option value="$PROJECT_DIR$/src/Server.java" />
@@ -77,6 +204,9 @@
         <option value="$PROJECT_DIR$/src/LogoutPanel.java" />
         <option value="$PROJECT_DIR$/src/UserProfilePanel.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/Card.java" />
+        <option value="$PROJECT_DIR$/src/RemoteInterface.java" />
+        <option value="$PROJECT_DIR$/src/JMSHelper.java" />
       </list>
     </option>
   </component>
@@ -96,8 +226,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,22 +236,49 @@
             <path>
               <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
               <item name="24-game" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="24-game" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="24-game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gf-client" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="24-game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="gf-client" type="70bed36:NamedLibraryElementNode" />
+              <item name="gf-client.jar" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production/24-game" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.1488189" />
+    <property name="project.structure.side.proportion" value="0.27803522" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -135,6 +290,7 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$/out/production/24-game" />
     </key>
   </component>
@@ -188,10 +344,18 @@
       <option name="presentableId" value="Default" />
       <updated>1557034408141</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add .gitignore file">
+      <created>1557234788102</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1557234788102</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="809" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="809" extended-state="6" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
@@ -199,13 +363,13 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info id="aws.explorer" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.22889842" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.23175965" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection Results" order="0" weight="0.32898173" />
-      <window_info anchor="bottom" id="Version Control" order="1" />
+      <window_info anchor="bottom" id="Version Control" order="1" sideWeight="0.49852508" weight="0.32898173" />
       <window_info anchor="bottom" id="Messages" order="2" weight="0.32898173" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="4" visible="true" weight="0.32898173" />
+      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5014749" side_tool="true" weight="0.32898173" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32898173" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.32898173" />
@@ -220,40 +384,57 @@
       <window_info anchor="right" id="Maven" order="3" weight="0.3297568" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.24964234" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Image Layers" order="0" />
-      <window_info id="Designer" order="1" />
-      <window_info id="UI Designer" order="2" />
-      <window_info id="Capture Tool" order="3" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info id="aws.explorer" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.22317597" />
-      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection Results" order="0" weight="0.32898173" />
-      <window_info anchor="bottom" id="Version Control" order="1" />
-      <window_info anchor="bottom" id="Messages" order="2" weight="0.32898173" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32898173" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.32898173" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.32898173" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="right" id="Theme Preview" order="0" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Palette&#9;" order="2" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="5" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
-    </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add .gitignore file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add .gitignore file" />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ServerGUI.java" />
@@ -294,30 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/UserProfilePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RemoteInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Panel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="46">
@@ -346,16 +503,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/LoginPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1537">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GamePanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -366,21 +513,131 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Server.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="112" selection-start-line="112" selection-end-line="114" selection-end-column="35" />
+        <state relative-caret-position="515">
+          <caret line="57" column="10" selection-start-line="57" selection-start-column="10" selection-end-line="57" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images/cards/12.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_202.jdk/Contents/Home/src.zip!/java/lang/Object.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9023">
+          <caret line="147" column="19" selection-start-line="147" selection-start-column="19" selection-end-line="147" selection-end-column="19" />
+          <folding>
+            <element signature="e#5748#5749#0" expanded="true" />
+            <element signature="e#5784#5785#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RemoteInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="76" selection-start-line="5" selection-start-column="76" selection-end-line="5" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LoginPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1679">
+          <caret line="73" column="82" selection-start-line="73" selection-start-column="82" selection-end-line="73" selection-end-column="82" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/src/UserProfilePanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2369">
-          <caret line="103" column="10" selection-start-line="103" selection-start-column="10" selection-end-line="103" selection-end-column="10" />
+        <state relative-caret-position="943">
+          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Card.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding>
+            <element signature="e#548#549#0" expanded="true" />
+            <element signature="e#575#576#0" expanded="true" />
+            <element signature="e#612#613#0" expanded="true" />
+            <element signature="e#644#645#0" expanded="true" />
+            <element signature="e#672#673#0" expanded="true" />
+            <element signature="e#699#700#0" expanded="true" />
+            <element signature="e#736#737#0" expanded="true" />
+            <element signature="e#768#769#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1817">
+          <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/local/Cellar/glassfish/5.0/libexec/glassfish/lib/gf-client.jar!/org/glassfish/appclient/client/acc/agent/LocalStrings.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar:///usr/local/Cellar/glassfish/5.0/libexec/glassfish/lib/gf-client.jar!/org/glassfish/appclient/client/acc/agent/AppClientContainerAgent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/local/Cellar/glassfish/5.0/libexec/glassfish/lib/gf-client.jar!/org/glassfish/appclient/client/acc/agent/ACCAgentClassLoader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/local/Cellar/glassfish/5.0/libexec/glassfish/lib/gf-client.jar!/org/glassfish/appclient/client/packageappclient/PackageAppClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6935">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/JMSHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5712" />
       </provider>
     </entry>
   </component>
@@ -392,7 +649,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.27803522" />
               </list>
             </option>
           </splitter-proportions>
@@ -400,10 +657,11 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.27803522" />
               </list>
             </option>
           </splitter-proportions>
@@ -414,7 +672,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.27803522" />
               </list>
             </option>
           </splitter-proportions>
@@ -422,10 +680,11 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.27803522" />
               </list>
             </option>
           </splitter-proportions>
@@ -438,7 +697,6 @@
             <option name="proportions">
               <list>
                 <option value="0.27803522" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -458,10 +716,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
+          <last-edited>gf-client</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.27803522" />
               </list>
             </option>
           </splitter-proportions>

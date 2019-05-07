@@ -42,7 +42,7 @@ public class LoginPanel extends Panel {
             }
 
             try {
-                Message loginResult = getRemote().login(txtUser.getText(), txtPassword.getText());
+                RMIMessage loginResult = getRemote().login(txtUser.getText(), txtPassword.getText());
                 JOptionPane.showMessageDialog(null, loginResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
                 if (loginResult.getStatus()) {  // Success
                     getClient().setLogin(true);
@@ -67,7 +67,7 @@ public class LoginPanel extends Panel {
             }
 
             try {
-                Message registerResult = getRemote().register(txtUser.getText(), txtPassword.getText());
+                RMIMessage registerResult = getRemote().register(txtUser.getText(), txtPassword.getText());
                 JOptionPane.showMessageDialog(null, registerResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
                 if (registerResult.getStatus()) {  // Success
                     getClient().setLogin(true);

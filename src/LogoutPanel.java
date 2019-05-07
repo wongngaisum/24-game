@@ -19,7 +19,7 @@ public class LogoutPanel extends Panel {
                 int response = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm",
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
-                    Message logoutResult = getRemote().logout(getClient().getUsername(), getClient().getPassword());
+                    RMIMessage logoutResult = getRemote().logout(getClient().getUsername(), getClient().getPassword());
                     JOptionPane.showMessageDialog(null, logoutResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
                     if (logoutResult.getStatus())
                         getClient().setLogin(false);
