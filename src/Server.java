@@ -274,8 +274,8 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 					txt = txt.replace("J", "11");
 					txt = txt.replace("Q", "12");
 					txt = txt.replace("K", "13");
-					int result =  Integer.parseInt(new Calculator().calculate(txt));
-					return result == 24;
+					float result =  Float.parseFloat(new Calculator().calculate(txt));
+					return result == 24.0;
 				} else {
 					return false;
 				}

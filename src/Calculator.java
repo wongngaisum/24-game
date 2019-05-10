@@ -34,7 +34,7 @@ public class Calculator {
 		expression = calculate(expression, "+");
 		expression = calculate(expression, "-");
 
-		return Integer.parseInt(expression.get(0));
+		return Math.round(Float.parseFloat((expression.get(0))));
 	}
 
 	// Handles parenthesis
@@ -63,7 +63,7 @@ public class Calculator {
 								newinput.add(expression.get(j));
 							}
 							// Runs the solve method on the inside of the parenthesis
-							expression.set(i, Integer.toString(solve(newinput)));
+							expression.set(i, Float.toString(solve(newinput)));
 
 							// Deletes the contents from the main ArrayList so only the calculation is left
 							for (int j = i + 1; j <= k; j++) {
@@ -88,10 +88,10 @@ public class Calculator {
 
 			if (expression.get(i).equals(operator)) {
 
-				int a = Integer.parseInt(expression.get(i - 1));
-				int b = Integer.parseInt(expression.get(i + 1));
+				float a = Float.valueOf(expression.get(i - 1));
+				float b = Float.valueOf(expression.get(i + 1));
 
-				expression.set(i - 1, Integer.toString(operation(a, b, operator)));
+				expression.set(i - 1, Float.toString(operation(a, b, operator)));
 				expression.remove(i);
 				expression.remove(i);
 				i--;
@@ -101,10 +101,10 @@ public class Calculator {
 	}
 
 	// Performs an operation on two numbers
-	public static int operation(int a, int b, String operator) {
+	public static float operation(float a, float b, String operator) {
 
 		if (operator.equals("^"))
-			return (int) Math.pow(a, b);
+			return (float) Math.pow(a, b);
 		else if (operator.equals("*"))
 			return a * b;
 		else if (operator.equals("/"))

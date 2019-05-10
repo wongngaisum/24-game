@@ -235,9 +235,9 @@ public class GamePanel extends Panel {
 					txt = txt.replace("J", "11");
 					txt = txt.replace("Q", "12");
 					txt = txt.replace("K", "13");
-					int result =  Integer.parseInt(new Calculator().calculate(txt));
+					float result =  Float.parseFloat(new Calculator().calculate(txt));
 					lblCalculatedNumber.setText("= " + result);
-					return result == 24;
+					return result == 24.0;
 				} else {
 					lblCalculatedNumber.setText("Used other numbers");
 					return false;
@@ -248,6 +248,7 @@ public class GamePanel extends Panel {
 			}
 		} catch (Exception e) {
 			lblCalculatedNumber.setText("Syntax Error");
+			e.printStackTrace();
 			return false;
 		}
 	}
