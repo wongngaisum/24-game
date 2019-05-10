@@ -45,8 +45,12 @@ public class JMSClient implements MessageListener {
 				System.out.println("Received start game request");
 				JMS_StartGame msg = (JMS_StartGame) objMsg;
 				client.startGame(msg);
+			} else if (objMsg instanceof JMS_EndGame) {
+				System.out.println("Received end game request");
+				JMS_EndGame msg = (JMS_EndGame) objMsg;
+				client.endGame(msg);
 			}
-		} catch (Exception e) { // (JMSException | MalformedURLException | URISyntaxException e) {
+		} catch (Exception e) {
 			System.err.println("Failed to receive message");
 		}
 	}

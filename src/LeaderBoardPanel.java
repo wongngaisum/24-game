@@ -48,7 +48,7 @@ public class LeaderBoardPanel extends Panel {
                             model.addRow(data);
                         }
                     }
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (Exception e) {
                 }
             }

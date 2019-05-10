@@ -56,7 +56,7 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 					return new RMIMessage("User has already logged in", false);
 				} else {
 					db.setOnline(user.getUsername());
-					System.out.println("User " + user.getUsername()  + "logged in");
+					System.out.println("User " + user.getUsername()  + " logged in");
 					return new RMIMessage("Logged in successfully", true);
 				}
 			} else if (result.equals("incorrect")) {
@@ -78,7 +78,7 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 			} else {
 				db.register(user.getUsername(), user.getPassword());
 				db.setOnline(user.getUsername());
-				System.out.println("User " + user.getUsername()  + "registered");
+				System.out.println("User " + user.getUsername()  + " registered");
 				return new RMIMessage("Registered successfully", true);
 			}
 		} catch (SQLException e) {
@@ -91,7 +91,19 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 	public RMIMessage logout(User user) throws RemoteException {
 		try {
 			db.logout(user.getUsername());
-			System.out.println("User " + user.getUsername()  + "logged out");
+			for (GameRoom room : gameRooms) {
+				if (room.havePlayer(user)) {
+					room.removePlayer(user);
+					System.out.println("Removed player " + user.getUsername() + " from room");
+					
+					if (room.isEmpty()) {
+						gameRooms.remove(room);
+						System.out.println("Removed a room");
+						break;
+					}
+				}
+			}
+			System.out.println("User " + user.getUsername()  + " logged out");
 			return new RMIMessage("Logged out successfully", true);
 		} catch (SQLException e) {
 			System.err.println("Exception thrown: " + e);
@@ -150,14 +162,6 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 		}
 	}
 
-	// check answer syntax, validate answer, get game room player info, update
-	// player info after play
-	// JMS: add play with info to list, start room management thread
-
-	public void removePlayer() {
-
-	}
-
 	public void startGame() throws JMSException {
 		int noOfPlayers = waitingList.size() > 4 ? 4 : waitingList.size();
 		ArrayList<User> players = new ArrayList<>();
@@ -205,6 +209,81 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 					System.err.println("Exception thrown: " + e);
 				}
 			}
+		}
+	}
+
+	@Override
+	public void submitAnswer(User user, ArrayList<Card> cards, String answer) throws RemoteException {
+		System.out.println(user.getUsername() + " submitted answer");
+		if (checkAnswer(answer, cards)) {
+			System.out.println("Answer is correct");
+			for (int i = 0; i < gameRooms.size(); i++) {
+				try {
+					if (gameRooms.get(i).havePlayer(user)) {
+						gameRooms.get(i).endGame();
+						db.updateWinnerInfo(gameRooms.get(i), user);
+	
+						JMS_EndGame endGameMsg = new JMS_EndGame(user, gameRooms.get(i), answer);
+						Message msg = jmsServer.getJmsHelper().createMessage(endGameMsg);
+						jmsServer.broadcastMessage(jmsServer.getTopicSender(), msg);
+	
+						gameRooms.remove(i);
+						break;
+					}
+				} catch (JMSException | SQLException e) {
+					System.err.println("Exception thrown: " + e);
+				}
+			}
+		}
+	}
+
+	private boolean checkAnswerSyntax(String answer, ArrayList<Card> cards) {
+		String ans = answer.replace("+", "");
+		ans = ans.replace("-", "");
+		ans = ans.replace("*", "");
+		ans = ans.replace("/", "");
+		ans = ans.replace("(", "");
+		ans = ans.replace(")", "");
+
+		for (Card card : cards) {
+			if (card.getRank() > 1 && card.getRank() <= 10) {
+				ans = ans.replaceFirst(String.valueOf(card.getRank()), "");
+			} else if (card.getRank() == 1) {
+				ans = ans.replaceFirst("A", "");
+			} else if (card.getRank() == 11) {
+				ans = ans.replaceFirst("J", "");
+			} else if (card.getRank() == 12) {
+				ans = ans.replaceFirst("Q", "");
+			} else if (card.getRank() == 13) {
+				ans = ans.replaceFirst("K", "");
+			}
+		}
+
+		if (ans.length() > 0) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean checkAnswer(String answer, ArrayList<Card> cards) {
+		try {
+			if (!answer.isEmpty()) {
+				if (checkAnswerSyntax(answer, cards)) {
+					String txt = answer;
+					txt = txt.replace("A", "1");
+					txt = txt.replace("J", "11");
+					txt = txt.replace("Q", "12");
+					txt = txt.replace("K", "13");
+					int result =  Integer.parseInt(new Calculator().calculate(txt));
+					return result == 24;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
 		}
 	}
 }

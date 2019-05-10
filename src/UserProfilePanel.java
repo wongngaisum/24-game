@@ -56,7 +56,7 @@ public class UserProfilePanel extends Panel {
                         lblAvgTimeToWin.setText("Average time to win: " + getClient().getUser().getTimeToWin());
                         lblRank.setText("Rank #" + getClient().getUser().getRank());
                     }
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (Exception e) {
                 }
             }

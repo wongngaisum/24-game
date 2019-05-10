@@ -11,4 +11,6 @@ public interface RemoteInterface extends Remote {
     User retrieveUserData(User user) throws RemoteException;
 
     ArrayList<User> getLeaderBoardData() throws RemoteException;
+    
+    void submitAnswer(User user, ArrayList<Card> cards, String answer) throws RemoteException;
 }

@@ -41,7 +41,14 @@ public class JMSServer {
 			}
 			topicSender.send(message);
 			System.out.println("Broadcasted message to players");
-		}
+		} else if (objMsg instanceof JMS_EndGame) {
+            JMS_EndGame msg = (JMS_EndGame) objMsg;
+            for (int i = 0; i < msg.getRoom().getPlayers().size(); i++) {
+                message.setStringProperty("receiver" + i, msg.getRoom().getPlayers().get(i).getUsername());
+            }
+            topicSender.send(message);
+            System.out.println("Broadcasted message to players");
+        }
     }
 
     public JMSHelper getJmsHelper() {
