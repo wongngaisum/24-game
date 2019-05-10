@@ -1,5 +1,6 @@
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class LoginPanel extends Panel {
     private JLabel lblUser;
@@ -34,32 +35,19 @@ public class LoginPanel extends Panel {
 
         btnLogin = new JButton("Login");
         btnLogin.setBounds(180, 130, 80, 25);
-        btnLogin.addActionListener(event -> {
-            // Empty field
-            if (txtUser.getText().equals("") || txtPassword.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Please enter username and password", "", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
-            try {
-                RMIMessage loginResult = getRemote().login(txtUser.getText(), txtPassword.getText());
-                JOptionPane.showMessageDialog(null, loginResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
-                if (loginResult.getStatus()) {  // Success
-                    getClient().setLogin(true);
-                    getClient().setUsernamePassword(txtUser.getText(), txtPassword.getText());
-                    // Clear text boxes
-                    txtUser.setText("");
-                    txtPassword.setText("");
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e, "", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+        btnLogin.addActionListener(new LoginListener());
         this.add(btnLogin);
 
         JButton registerButton = new JButton("Register");
         registerButton.setBounds(340, 130, 80, 25);
-        registerButton.addActionListener(event -> {
+        registerButton.addActionListener(new RegisterListener());
+
+        this.add(registerButton);
+    }
+
+    public class LoginListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
             // Empty field
             if (txtUser.getText().equals("") || txtPassword.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please enter username and password", "", JOptionPane.INFORMATION_MESSAGE);
@@ -67,11 +55,13 @@ public class LoginPanel extends Panel {
             }
 
             try {
-                RMIMessage registerResult = getRemote().register(txtUser.getText(), txtPassword.getText());
-                JOptionPane.showMessageDialog(null, registerResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
-                if (registerResult.getStatus()) {  // Success
+                User user = new User(txtUser.getText(), txtPassword.getText());
+                RMIMessage loginResult = getRemote().login(user);
+                JOptionPane.showMessageDialog(null, loginResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
+                if (loginResult.getStatus()) {  // Success
                     getClient().setLogin(true);
-                    getClient().setUsernamePassword(txtUser.getText(), txtPassword.getText());
+                    getClient().setUser(user);
+                    getClient().getJMSClient().initialize(user);
                     // Clear text boxes
                     txtUser.setText("");
                     txtPassword.setText("");
@@ -79,13 +69,33 @@ public class LoginPanel extends Panel {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error: " + e, "", JOptionPane.INFORMATION_MESSAGE);
             }
-        });
+        }
+    }
 
-        this.add(registerButton);
+    public class RegisterListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            // Empty field
+            if (txtUser.getText().equals("") || txtPassword.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter username and password", "", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            try {
+                User user = new User(txtUser.getText(), txtPassword.getText());
+                RMIMessage registerResult = getRemote().register(user);
+                JOptionPane.showMessageDialog(null, registerResult.getMessage(), "", JOptionPane.INFORMATION_MESSAGE);
+                if (registerResult.getStatus()) {  // Success
+                    getClient().setLogin(true);
+                    getClient().setUser(user);
+                    getClient().getJMSClient().initialize(user);
+                    // Clear text boxes
+                    txtUser.setText("");
+                    txtPassword.setText("");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e, "", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
-/*
-    public boolean getLoginStatus() {
-        return loginSuccess;
-    }
-*/
 }

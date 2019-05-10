@@ -38,20 +38,28 @@ public class UserProfilePanel extends Panel {
         this.add(lblRank);
 
         // Update data periodically
-        new Thread(() -> {
+        new UpdateUserDataTimer().start();
+    }
+
+    public class UpdateUserDataTimer extends Thread {
+        @Override
+        public void run() {
             while (true) {
                 try {
                     if (getClient().getLoginStatus()) {
-                        lblUsername.setText(getClient().getUsername());
-                        lblNoOfWins.setText("Number of Wins: 0");
-                        lblNoOfGames.setText("Number of Games: 0");
-                        lblAvgTimeToWin.setText("Average time to win: null");
-                        lblRank.setText("Rank #0");
+                        User newData = getRemote().retrieveUserData(getClient().getUser());
+                        if (newData != null)
+                            getClient().setUser(newData);
+                        lblUsername.setText(getClient().getUser().getUsername());
+                        lblNoOfWins.setText("Number of Wins: " + getClient().getUser().getGamesWon());
+                        lblNoOfGames.setText("Number of Games: " + getClient().getUser().getGamesPlayed());
+                        lblAvgTimeToWin.setText("Average time to win: " + getClient().getUser().getTimeToWin());
+                        lblRank.setText("Rank #" + getClient().getUser().getRank());
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (Exception e) {
                 }
             }
-        }).start();
+        }
     }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/wongngaisum/Documents/Projects/24-game/mysql-connector-java-8.0.16.jar"/>
+	<classpathentry kind="lib" path="/usr/local/Cellar/glassfish/5.0/libexec/glassfish/lib/gf-client.jar"/>
+	<classpathentry kind="output" path="out/production/24-game"/>
+</classpath>

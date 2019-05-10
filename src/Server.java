@@ -1,159 +1,210 @@
-import java.io.*;
-import java.rmi.*;
-import java.rmi.server.*;
-import java.util.*;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.naming.NamingException;
 
 public class Server extends UnicastRemoteObject implements RemoteInterface {
-    private BufferedReader userInfoReader;
-    private PrintWriter userInfoWriter;
-    private BufferedReader onlineUserReader;
-    private PrintWriter onlineUserWriter;
+	private DBManager db;
+	private JMSServer jmsServer;
 
-    private File userInfoFile = new File("UserInfo.txt");
-    private File onlineUserFile = new File("OnlineUser.txt");
+	private ArrayList<User> waitingList;
+	private ArrayList<GameRoom> gameRooms;
+	private HashMap<User, WaitingRoomTimer> waitingRoomTimers;
 
-    private ArrayList<String> usernameList = new ArrayList<>();
-    private ArrayList<String> passwordList = new ArrayList<>();
+	private boolean timeout; // Can start game with < 4 players if timeout, otherwise 4
 
-    private Server() throws RemoteException {
-        readUserInfo();
+	public Server() throws RemoteException, SQLException, InstantiationException, IllegalAccessException,
+			ClassNotFoundException, NamingException, JMSException {
+		db = new DBManager();
+		jmsServer = new JMSServer(this);
+		new MessageReceiver().start();
+
+		waitingList = new ArrayList<>();
+		gameRooms = new ArrayList<>();
+		waitingRoomTimers = new HashMap<>();
+		timeout = false;
+	}
+
+	public static void main(String[] args) {
+		try {
+			// Security policy
+			// System.setProperty("java.security.policy", "file:./security.policy");
+			// System.setSecurityManager(new SecurityManager());
+
+			// RMI
+			Server app = new Server();
+			Naming.rebind("Server", app);
+
+			System.out.println("Service registered");
+		} catch (Exception e) {
+			System.err.println("Exception thrown: " + e);
+		}
+	}
+
+	@Override
+	public RMIMessage login(User user) throws RemoteException {
+		try {
+			String result = db.checkACPW(user.getUsername(), user.getPassword());
+			if (result.equals("correct")) {
+				boolean isOnline = db.checkOnline(user.getUsername());
+				if (isOnline) {
+					return new RMIMessage("User has already logged in", false);
+				} else {
+					db.setOnline(user.getUsername());
+					System.out.println("User " + user.getUsername()  + "logged in");
+					return new RMIMessage("Logged in successfully", true);
+				}
+			} else if (result.equals("incorrect")) {
+				return new RMIMessage("Incorrect password", false);
+			} else {
+				return new RMIMessage("User does not exist", false);
+			}
+		} catch (SQLException e) {
+			System.err.println("Exception thrown: " + e);
+			return new RMIMessage("SQL error, please try again later", false);
+		}
+	}
+
+	@Override
+	public RMIMessage register(User user) throws RemoteException {
+		try {
+			if (db.checkDuplicateUser(user.getUsername())) {
+				return new RMIMessage("Username has been used", false);
+			} else {
+				db.register(user.getUsername(), user.getPassword());
+				db.setOnline(user.getUsername());
+				System.out.println("User " + user.getUsername()  + "registered");
+				return new RMIMessage("Registered successfully", true);
+			}
+		} catch (SQLException e) {
+			System.err.println("Exception thrown: " + e);
+			return new RMIMessage("SQL error, please try again later", false);
+		}
+	}
+
+	@Override
+	public RMIMessage logout(User user) throws RemoteException {
+		try {
+			db.logout(user.getUsername());
+			System.out.println("User " + user.getUsername()  + "logged out");
+			return new RMIMessage("Logged out successfully", true);
+		} catch (SQLException e) {
+			System.err.println("Exception thrown: " + e);
+			return new RMIMessage("Failed to logout", false);
+		}
+	}
+
+	@Override
+	public User retrieveUserData(User user) throws RemoteException {
+		try {
+			return db.retrieveUserData(user);
+		} catch (SQLException e) {
+			System.err.println("Exception thrown: " + e);
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<User> getLeaderBoardData() throws RemoteException {
+		try {
+			return db.getLeaderBoardData();
+		} catch (SQLException e) {
+			System.err.println("Exception thrown: " + e);
+			return null;
+		}
+	}
+
+	public void addUserToList(JMS_JoinGame msg) {
+		waitingList.add(msg.getUser());
+		WaitingRoomTimer timer = new WaitingRoomTimer();
+		waitingRoomTimers.put(msg.getUser(), timer);
+		timer.start();
+		System.out.println("Added user " + msg.getUser().getUsername() + " to list");
+	}
+
+	public class WaitingRoomTimer extends Thread {
+		@Override
+		public void run() {
+			try {
+				if (waitingList.size() == 4) {
+					startGame();
+				} else if (timeout && waitingList.size() > 1) {
+					startGame();
+				} else {
+					Thread.sleep(10000);
+					if (waitingList.size() == 1) {
+						timeout = true;
+					} else {
+						startGame();
+					}
+				}
+			} catch (Exception e) {
+				System.err.println("Exception thrown: " + e);
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
+	// check answer syntax, validate answer, get game room player info, update
+	// player info after play
+	// JMS: add play with info to list, start room management thread
+
+	public void removePlayer() {
+
+	}
+
+	public void startGame() throws JMSException {
+		int noOfPlayers = waitingList.size() > 4 ? 4 : waitingList.size();
+		ArrayList<User> players = new ArrayList<>();
+		
+		for (int i = 0; i < noOfPlayers; i++) {
+			players.add(waitingList.get(0));
+			waitingRoomTimers.get(waitingList.get(0)).interrupt();
+			waitingRoomTimers.remove(waitingList.get(0));
+			waitingList.remove(0);
+		}
+		
+		JMS_StartGame startGameMsg = new JMS_StartGame(players, drawCards());
+		Message msg = jmsServer.getJmsHelper().createMessage(startGameMsg);
+		jmsServer.broadcastMessage(jmsServer.getTopicSender(), msg);
+		
+		gameRooms.add(new GameRoom(players));
+		
+		timeout = false;
+		
+		System.out.println("Game started");
+	}
+
+	// room management thread
+
+	public ArrayList<Card> drawCards() {
+    	ArrayList<Card> cards = new ArrayList<>();
+    	while (cards.size() < 4) {
+    		int rank = (int) (Math.random() * 13 + 1);
+    		int suit = (int) (Math.random() * 4 + 1);
+    		Card card = new Card(rank, suit);
+    		if (!cards.contains(card)) {
+    			cards.add(card);
+    		}
+    	}
+    	return cards;
     }
 
-    public static void main(String[] args) {
-        try {
-            System.setProperty("java.security.policy", "file:./security.policy");
-            System.setSecurityManager(new SecurityManager());
-            Server app = new Server();
-            Naming.rebind("Server", app);
-            System.out.println("Service registered");
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-        }
-    }
-
-    private void readUserInfo() {
-        try {
-            userInfoReader = new BufferedReader(new FileReader(userInfoFile));
-
-            String username, password;
-            while ((username = userInfoReader.readLine()) != null) {
-                password = userInfoReader.readLine();
-                usernameList.add(username);
-                passwordList.add(password);
-            }
-
-            userInfoReader.close();
-
-            onlineUserWriter = new PrintWriter(new BufferedWriter(new FileWriter(onlineUserFile)));
-            onlineUserWriter.close();
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-            System.exit(0);
-        }
-    }
-
-    private boolean isOnline(String username) {
-        try {
-            onlineUserReader = new BufferedReader(new FileReader(onlineUserFile));
-
-            String onlineUser;
-            while ((onlineUser = onlineUserReader.readLine()) != null) {
-                if (onlineUser.equals(username)) {
-                    onlineUserReader.close();
-                    return true;
-                }
-            }
-
-            onlineUserReader.close();
-            return false;
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-            return false;
-        }
-    }
-
-    private void setOnline(String username) {
-        try {
-            onlineUserWriter = new PrintWriter(new BufferedWriter(new FileWriter(onlineUserFile, true)));
-            onlineUserWriter.println(username);
-            onlineUserWriter.flush();
-            onlineUserWriter.close();
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-        }
-    }
-
-    private void setOffline(String username) {
-        try {
-            onlineUserReader = new BufferedReader(new FileReader(onlineUserFile));
-
-            StringBuffer sb = new StringBuffer("");
-            String line;
-
-            while ((line = onlineUserReader.readLine()) != null) {
-                if (!line.equals(username))
-                    sb.append(line + "\n");
-            }
-
-            onlineUserReader.close();
-
-            onlineUserWriter = new PrintWriter(new BufferedWriter(new FileWriter(onlineUserFile)));
-            onlineUserWriter.write(sb.toString());
-            onlineUserWriter.flush();
-            onlineUserWriter.close();
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-        }
-    }
-
-    private void addNewUser(String username, String password) {
-        try {
-            userInfoWriter = new PrintWriter(new BufferedWriter(new FileWriter(userInfoFile, true)));
-            userInfoWriter.println(username);
-            userInfoWriter.println(password);
-            userInfoWriter.flush();
-            userInfoWriter.close();
-        } catch (Exception e) {
-            System.err.println("Exception thrown: " + e);
-        }
-    }
-
-    @Override
-    public RMIMessage login(String username, String password) throws RemoteException {
-        int idx = usernameList.indexOf(username);
-        if (idx != -1 && passwordList.get(idx).equals(password))
-            if (isOnline(username))
-                return new RMIMessage("User has already logged in", false);
-            else {
-                setOnline(username);
-                return new RMIMessage("Logged in successfully", true);
-            }
-        else if (idx == -1)
-            return new RMIMessage("User does not exist", false);
-        else
-            return new RMIMessage("Incorrect password", false);
-    }
-
-    @Override
-    public RMIMessage register(String username, String password) throws RemoteException {
-        int idx = usernameList.indexOf(username);
-        if (idx == -1) {
-            usernameList.add(username);
-            passwordList.add(password);
-            addNewUser(username, password);
-            setOnline(username);
-            return new RMIMessage("Registered successfully", true);
-        } else
-            return new RMIMessage("Username has been used", false);
-    }
-
-    @Override
-    public RMIMessage logout(String username, String password) throws RemoteException {
-        int idx = usernameList.indexOf(username);
-        if (idx != -1 && passwordList.get(idx).equals(password)) {
-            setOffline(username);
-            return new RMIMessage("Logged out successfully", true);
-        } else
-            return new RMIMessage("Failed to logout", false);
-    }
+	public class MessageReceiver extends Thread {
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					jmsServer.receiveMessage();
+				} catch (Exception e) {
+					System.err.println("Exception thrown: " + e);
+				}
+			}
+		}
+	}
 }

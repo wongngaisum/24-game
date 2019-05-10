@@ -1,8 +1,12 @@
+import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.rmi.registry.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 public class Client implements Runnable {
     // GUI
@@ -17,9 +21,11 @@ public class Client implements Runnable {
     private LogoutPanel logoutPanel;
 
     // Account data
-    private String username;
-    private String password;
+    private User user;
     private boolean loginStatus;
+    
+    // JMS
+    private JMSClient jmsClient; 
 
     public static void main(String[] args) {
         if (args.length == 1)
@@ -32,6 +38,7 @@ public class Client implements Runnable {
         try {
             Registry registry = LocateRegistry.getRegistry(host);
             remote = (RemoteInterface) registry.lookup("Server");
+            jmsClient = new JMSClient(host, this);
         } catch (Exception e) {
             System.err.println("Failed accessing RMI: " + e);
             System.exit(0);
@@ -52,7 +59,7 @@ public class Client implements Runnable {
             @Override
             public void windowClosing(WindowEvent event) {
                 try {
-                    remote.logout(username, password);
+                    remote.logout(user);
                 } catch (Exception e) {
                     System.err.println("Failed accessing RMI: " + e);
                 }
@@ -95,20 +102,16 @@ public class Client implements Runnable {
         } else {
             revertTabs();
             tabs.setSelectedIndex(0);
+            gamePanel.resetGame();
         }
     }
 
-    public void setUsernamePassword(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
+    public User getUser() {
+        return user;
     }
 
     private void revertTabs() {
@@ -121,40 +124,18 @@ public class Client implements Runnable {
     public boolean getLoginStatus() {
         return loginStatus;
     }
-}
-/*
-class CheckLoginStatus implements Runnable {
-    private JTabbedPane tabs;
-    private LoginPanel loginPanel;
-    private LogoutPanel logoutPanel;
-    private ArrayList<Panel> panels;
-    private boolean login;
-
-    public CheckLoginStatus(JTabbedPane tabs, LoginPanel loginPanel, LogoutPanel logoutPanel, ArrayList<Panel> panels) {
-        this.tabs = tabs;
-        this.loginPanel = loginPanel;
-        this.logoutPanel = logoutPanel;
-        this.panels = panels;
-        login = false;
+    
+    public JMSClient getJMSClient() {
+    	return jmsClient;
     }
-
-    public void run() {
-        while (true) {
-            try {
-                if (!login) {
-                    if (login = loginPanel.getLoginStatus()) {
-                        for (int i = 0; i < panels.size(); i++) {
-                            panels.get(i).setStatus(!panels.get(i).getStatus());
-                            tabs.setEnabledAt(i, panels.get(i).getStatus());
-                        }
-                        tabs.setSelectedIndex(1);
-                    }
-                }
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                System.err.println("Error: " + e);
-            }
-        }
+    
+    public void sendJoinGameMessage() throws JMSException {
+    	JMS_JoinGame joinGameMsg = new JMS_JoinGame(user);
+    	Message msg = jmsClient.getJmsHelper().createMessage(joinGameMsg);
+    	jmsClient.sendMessage(msg);
+    }
+    
+    public void startGame(JMS_StartGame msg) {
+    	gamePanel.startGame(msg.getUsers(), msg.getCards());
     }
 }
-*/
