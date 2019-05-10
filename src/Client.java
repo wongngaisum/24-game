@@ -28,10 +28,12 @@ public class Client implements Runnable {
 	private JMSClient jmsClient;
 
 	public static void main(String[] args) {
-		if (args.length == 1)
+		if (args.length == 1) {
 			SwingUtilities.invokeLater(new Client(args[0]));
-		else
-			System.err.println("Please enter server IP address");
+		} else {
+			SwingUtilities.invokeLater(new Client("localhost"));
+			System.out.println("Server IP address not set. Use localhost.");
+		}
 	}
 
 	private Client(String host) {
