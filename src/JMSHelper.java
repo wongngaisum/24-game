@@ -36,11 +36,10 @@ public class JMSHelper {
 
 	public JMSHelper(String host) throws NamingException, JMSException {
 		int port = DEFAULT_PORT;
-		Properties props = new Properties();
-		props.setProperty("org.omg.CORBA.ORBInitialHost", host);
-		props.setProperty("org.omg.CORBA.ORBInitialPort", "" + port);
+		System.setProperty("org.omg.CORBA.ORBInitialHost", host);
+		System.setProperty("org.omg.CORBA.ORBInitialPort", "" + port);
 		try {
-			jndiContext = new InitialContext(props);
+			jndiContext = new InitialContext();
 			connectionFactory = (ConnectionFactory) jndiContext.lookup(JMS_CONNECTION_FACTORY);
 			queue = (Queue) jndiContext.lookup(JMS_QUEUE);
 			topic = (Topic) jndiContext.lookup(JMS_TOPIC);

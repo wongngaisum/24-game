@@ -34,6 +34,7 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 		try {
 			System.out.println("Please set DB_USER = root, DB_PASS = \"\", DB_Name = c0402 if you did not");
 			System.out.println("Please create jms/JPoker24GameConnectionFactory, jms/JPoker24GameQueue, jms/JPoker24GameTopic if you did not");
+			
 			// Security policy
 			// System.setProperty("java.security.policy", "file:./security.policy");
 			// System.setSecurityManager(new SecurityManager());
@@ -44,7 +45,7 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 
 			System.out.println("Service registered");
 		} catch (Exception e) {
-			System.err.println("Exception thrown: " + e);
+			e.printStackTrace();
 		}
 	}
 
@@ -185,8 +186,6 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 		
 		System.out.println("Game started");
 	}
-
-	// room management thread
 
 	public ArrayList<Card> drawCards() {
     	ArrayList<Card> cards = new ArrayList<>();
