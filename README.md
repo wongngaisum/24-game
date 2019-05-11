@@ -3,7 +3,7 @@ The 24 Game is an arithmetical card game in which the objective is to find a way
 * A server that handle user login, user matching, and gaming support;
 * A client that allow users to login and play games.
 
-## Game rule
+## Game rules
 * 4 Cards of different values are drawn
 * Suit doesn’t matter
 * Goal: an expression that equals 24
