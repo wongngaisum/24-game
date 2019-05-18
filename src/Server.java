@@ -34,7 +34,8 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Please set DB_USER = root, DB_PASS = \"\", DB_Name = c0402 if you did not");
-			System.out.println("Please create jms/JPoker24GameConnectionFactory, jms/JPoker24GameQueue, jms/JPoker24GameTopic if you did not");
+			System.out.println(
+					"Please create jms/JPoker24GameConnectionFactory, jms/JPoker24GameQueue, jms/JPoker24GameTopic if you did not");
 
 			// RMI
 			Server app = new Server();
@@ -43,7 +44,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 
 			// Security policy
 			System.setSecurityManager(new SecurityManager());
-			
+
 			System.out.println("Service registered");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +58,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public RMIMessage login(User user) throws RemoteException {
 		try {
@@ -68,7 +69,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 					return new RMIMessage("User has already logged in", false);
 				} else {
 					db.setOnline(user.getUsername());
-					System.out.println("User " + user.getUsername()  + " logged in");
+					System.out.println("User " + user.getUsername() + " logged in");
 					return new RMIMessage("Logged in successfully", true);
 				}
 			} else if (result.equals("incorrect")) {
@@ -90,7 +91,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 			} else {
 				db.register(user.getUsername(), user.getPassword());
 				db.setOnline(user.getUsername());
-				System.out.println("User " + user.getUsername()  + " registered");
+				System.out.println("User " + user.getUsername() + " registered");
 				return new RMIMessage("Registered successfully", true);
 			}
 		} catch (SQLException e) {
@@ -114,14 +115,14 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 					waitingRoomTimers.remove(user);
 				}
 				waitingList.remove(waitingList.indexOf(user));
-				
+
 				System.out.println("Removed player " + user.getUsername() + " from (waiting) list");
-			} else {	// Started game
+			} else { // Started game
 				for (GameRoom room : gameRooms) {
 					if (room.havePlayer(user)) {
 						room.removePlayer(user);
 						System.out.println("Removed player " + user.getUsername() + " from room");
-						
+
 						if (room.isEmpty()) {
 							gameRooms.remove(room);
 							System.out.println("Removed a room");
@@ -131,7 +132,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 				}
 			}
 
-			System.out.println("User " + user.getUsername()  + " logged out");
+			System.out.println("User " + user.getUsername() + " logged out");
 			return new RMIMessage("Logged out successfully", true);
 		} catch (SQLException e) {
 			System.err.println("Exception thrown: " + e);
@@ -193,37 +194,37 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 	public void startGame() throws JMSException {
 		int noOfPlayers = waitingList.size() > 4 ? 4 : waitingList.size();
 		ArrayList<User> players = new ArrayList<>();
-		
+
 		for (int i = 0; i < noOfPlayers; i++) {
 			players.add(waitingList.get(0));
 			waitingRoomTimers.get(waitingList.get(0)).interrupt();
 			waitingRoomTimers.remove(waitingList.get(0));
 			waitingList.remove(0);
 		}
-		
+
 		JMS_StartGame startGameMsg = new JMS_StartGame(players, drawCards());
 		Message msg = jmsServer.getJmsHelper().createMessage(startGameMsg);
 		jmsServer.broadcastMessage(jmsServer.getTopicSender(), msg);
-		
+
 		gameRooms.add(new GameRoom(players));
-		
+
 		timeout = false;
-		
+
 		System.out.println("Game started");
 	}
 
 	public ArrayList<Card> drawCards() {
-    	ArrayList<Card> cards = new ArrayList<>();
-    	while (cards.size() < 4) {
-    		int rank = (int) (Math.random() * 13 + 1);
-    		int suit = (int) (Math.random() * 4 + 1);
-    		Card card = new Card(rank, suit);
-    		if (!cards.contains(card)) {
-    			cards.add(card);
-    		}
-    	}
-    	return cards;
-    }
+		ArrayList<Card> cards = new ArrayList<>();
+		while (cards.size() < 4) {
+			int rank = (int) (Math.random() * 13 + 1);
+			int suit = (int) (Math.random() * 4 + 1);
+			Card card = new Card(rank, suit);
+			if (!cards.contains(card)) {
+				cards.add(card);
+			}
+		}
+		return cards;
+	}
 
 	public class MessageReceiver extends Thread {
 		@Override
@@ -248,11 +249,11 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 					if (gameRooms.get(i).havePlayer(user)) {
 						gameRooms.get(i).endGame();
 						db.updateWinnerInfo(gameRooms.get(i), user);
-	
+
 						JMS_EndGame endGameMsg = new JMS_EndGame(user, gameRooms.get(i), answer);
 						Message msg = jmsServer.getJmsHelper().createMessage(endGameMsg);
 						jmsServer.broadcastMessage(jmsServer.getTopicSender(), msg);
-	
+
 						gameRooms.remove(i);
 						break;
 					}
@@ -271,21 +272,37 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 		ans = ans.replace("(", "");
 		ans = ans.replace(")", "");
 
+		boolean usedAllCards = true;
 		for (Card card : cards) {
 			if (card.getRank() > 1 && card.getRank() <= 10) {
+				if (ans.split(String.valueOf(card.getRank()), -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst(String.valueOf(card.getRank()), "");
 			} else if (card.getRank() == 1) {
+				if (ans.split("A", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("A", "");
 			} else if (card.getRank() == 11) {
+				if (ans.split("J", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("J", "");
 			} else if (card.getRank() == 12) {
+				if (ans.split("Q", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("Q", "");
 			} else if (card.getRank() == 13) {
+				if (ans.split("K", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("K", "");
 			}
 		}
 
-		if (ans.length() > 0) {
+		if (ans.length() > 0 || !usedAllCards) {
 			return false;
 		}
 		return true;
@@ -300,7 +317,7 @@ public class Server extends UnicastRemoteObject implements RemoteInt {
 					txt = txt.replace("J", "11");
 					txt = txt.replace("Q", "12");
 					txt = txt.replace("K", "13");
-					float result =  Float.parseFloat(new Calculator().calculate(txt));
+					float result = Float.parseFloat(new Calculator().calculate(txt));
 					return result == 24.0;
 				} else {
 					return false;

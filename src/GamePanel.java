@@ -201,7 +201,7 @@ public class GamePanel extends Panel {
 		}
 	}
 
-	private boolean checkAnswerSyntax(String answer) {
+	private int checkAnswerSyntax(String answer) {
 		String ans = answer.replace("+", "");
 		ans = ans.replace("-", "");
 		ans = ans.replace("*", "");
@@ -209,30 +209,49 @@ public class GamePanel extends Panel {
 		ans = ans.replace("(", "");
 		ans = ans.replace(")", "");
 
+		boolean usedAllCards = true;
 		for (Card card : cards) {
 			if (card.getRank() > 1 && card.getRank() <= 10) {
+				if (ans.split(String.valueOf(card.getRank()), -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst(String.valueOf(card.getRank()), "");
 			} else if (card.getRank() == 1) {
+				if (ans.split("A", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("A", "");
 			} else if (card.getRank() == 11) {
+				if (ans.split("J", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("J", "");
 			} else if (card.getRank() == 12) {
+				if (ans.split("Q", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("Q", "");
 			} else if (card.getRank() == 13) {
+				if (ans.split("K", -1).length != 2) {
+					usedAllCards = false;
+				}
 				ans = ans.replaceFirst("K", "");
 			}
 		}
 
 		if (ans.length() > 0) {
-			return false;
+			return -1;
+		} else if (!usedAllCards) {
+			return 0;
 		}
-		return true;
+		return 1;
 	}
 
 	private boolean checkAnswer() {
 		try {
 			if (!txtAnswer.getText().isEmpty()) {
-				if (checkAnswerSyntax(txtAnswer.getText())) {
+				int syntaxResult = checkAnswerSyntax(txtAnswer.getText());
+				if (syntaxResult == 1) {
 					String txt = txtAnswer.getText();
 					txt = txt.replace("A", "1");
 					txt = txt.replace("J", "11");
@@ -241,14 +260,22 @@ public class GamePanel extends Panel {
 					float result =  Float.parseFloat(new Calculator().calculate(txt));
 					lblCalculatedNumber.setText("= " + result);
 					return result == 24.0;
-				} else {
+				} else if (syntaxResult == 0)  {
+					// Not used all numbers
+					String txt = txtAnswer.getText();
+					txt = txt.replace("A", "1");
+					txt = txt.replace("J", "11");
+					txt = txt.replace("Q", "12");
+					txt = txt.replace("K", "13");
+					float result =  Float.parseFloat(new Calculator().calculate(txt));
+					lblCalculatedNumber.setText("= " + result);
+				} else if (syntaxResult == -1)  {
 					lblCalculatedNumber.setText("Used other numbers");
-					return false;
 				}
 			} else {
 				lblCalculatedNumber.setText("");
-				return false;
 			}
+			return false;
 		} catch (Exception e) {
 			lblCalculatedNumber.setText("Syntax Error");
 			return false;
@@ -281,7 +308,7 @@ public class GamePanel extends Panel {
 	                e.printStackTrace();
 	            }
 			} else {
-				JOptionPane.showMessageDialog(null, "Answer does not equal to 24" , "", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Incorrect answer" , "", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
