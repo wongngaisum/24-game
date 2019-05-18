@@ -3,6 +3,7 @@ import java.util.Stack;
 import java.lang.String;
 import java.util.ArrayList;
 import java.lang.StringBuilder;
+import java.util.HashSet;
 import java.lang.Exception;
 import java.lang.Math;
 
@@ -48,122 +49,125 @@ public class Calculator {
 	 * @param postfix
 	 * @return
 	 */
-	public static ArrayList inputCleaner(String postfix) throws SyntaxErrorException {
+	public static ArrayList inputCleaner(String postfix) {
 		StringBuilder sb = new StringBuilder();
 		String noSpaces = postfix.replace(" ", "");
+		try {
+			for (int i = 0; i < noSpaces.length(); i++) {
+				char c = noSpaces.charAt(i);
+				boolean isNum = (c >= '0' && c <= '9');
 
-		for (int i = 0; i < noSpaces.length(); i++) {
-			char c = noSpaces.charAt(i);
-			boolean isNum = (c >= '0' && c <= '9');
-
-			if (isNum) {
-				sb.append(c);
-				if (i == noSpaces.length() - 1) {
-					input.add(sb.toString());
-					sb.delete(0, sb.length());
-				}
-			} else if (c == '.') {
-				for (int j = 0; j < sb.length(); j++) {
-					if (sb.charAt(j) == '.') {
-						throw new SyntaxErrorException("You can't have two decimals in a number.");
-					} else if (j == sb.length() - 1) {
-						sb.append(c);
-						j = (sb.length() + 1);
-					}
-				}
-				if (sb.length() == 0) {
+				if (isNum) {
 					sb.append(c);
-				}
-				if (i == noSpaces.length() - 1) {
-					throw new SyntaxErrorException("You can't end your equation with a decimal!");
-				}
-			} else if (OPERATORS.indexOf(c) != -1) {
-				if (sb.length() != 0) {
+					if (i == noSpaces.length() - 1) {
+						input.add(sb.toString());
+						sb.delete(0, sb.length());
+					}
+				} else if (c == '.') {
+					for (int j = 0; j < sb.length(); j++) {
+						if (sb.charAt(j) == '.') {
+							throw new SyntaxErrorException("You can't have two decimals in a number.");
+						} else if (j == sb.length() - 1) {
+							sb.append(c);
+							j = (sb.length() + 1);
+						}
+					}
+					if (sb.length() == 0) {
+						sb.append(c);
+					}
+					if (i == noSpaces.length() - 1) {
+						throw new SyntaxErrorException("You can't end your equation with a decimal!");
+					}
+				} else if (OPERATORS.indexOf(c) != -1) {
+					if (sb.length() != 0) {
+						input.add(sb.toString());
+						sb.delete(0, sb.length());
+					}
+					sb.append(c);
 					input.add(sb.toString());
 					sb.delete(0, sb.length());
+				} else {
+					throw new SyntaxErrorException(
+							"Make sure your input only contains numbers, operators, or parantheses/brackets/braces.");
 				}
-				sb.append(c);
-				input.add(sb.toString());
-				sb.delete(0, sb.length());
-			} else {
-				throw new SyntaxErrorException(
-						"Make sure your input only contains numbers, operators, or parantheses/brackets/braces.");
-			}
-		}
-
-		int numLP = 0;
-		int numRP = 0;
-		int numLB = 0;
-		int numRB = 0;
-		int numLBr = 0;
-		int numRBr = 0;
-
-		for (int f = 0; f < input.size(); f++) {
-			switch (input.get(f)) {
-			case "(":
-				numLP++;
-				break;
-			case "[":
-				numLB++;
-				break;
-			case "{":
-				numLBr++;
-				break;
-			case ")":
-				numRP++;
-				break;
-			case "]":
-				numRB++;
-				break;
-			case "}":
-				numRBr++;
-				break;
-			default: // do nothing
-				break;
 			}
 
-		}
-		if (numLP != numRP || numLB != numRB || numLBr != numRBr) {
-			throw new SyntaxErrorException("The number of brackets, braces, or parentheses don't match up!");
-		}
+			int numLP = 0;
+			int numRP = 0;
+			int numLB = 0;
+			int numRB = 0;
+			int numLBr = 0;
+			int numRBr = 0;
 
-		int doop = 0;
-		int scoop = 0;
-		int foop = 0;
-		for (int f = 0; f < input.size(); f++) {
-			String awesome = input.get(f);
-			switch (awesome) {
-			case "(":
-				doop++;
-				break;
-			case "[":
-				scoop++;
-				break;
-			case "{":
-				foop++;
-				break;
-			case ")":
-				doop--;
-				break;
-			case "]":
-				scoop--;
-				break;
-			case "}":
-				foop--;
-				break;
-			default: // do nothing
-				break;
-			}
-			if (doop < 0 || scoop < 0 || foop < 0) {
-				throw new SyntaxErrorException(
-						"The order of your parentheses, brackets, or braces is off.\nMake sure you open a set of parenthesis/brackets/braces before you close them.");
-			}
-		}
-		if (NONBRACES.indexOf(input.get(input.size() - 1)) != -1) {
-			throw new SyntaxErrorException("The input can't end in an operator");
-		}
-		return input;
+			for (int f = 0; f < input.size(); f++) {
+				switch (input.get(f)) {
+				case "(":
+					numLP++;
+					break;
+				case "[":
+					numLB++;
+					break;
+				case "{":
+					numLBr++;
+					break;
+				case ")":
+					numRP++;
+					break;
+				case "]":
+					numRB++;
+					break;
+				case "}":
+					numRBr++;
+					break;
+				default: // do nothing
+					break;
+				}
 
+			}
+			if (numLP != numRP || numLB != numRB || numLBr != numRBr) {
+				throw new SyntaxErrorException("The number of brackets, braces, or parentheses don't match up!");
+			}
+
+			int doop = 0;
+			int scoop = 0;
+			int foop = 0;
+			for (int f = 0; f < input.size(); f++) {
+				String awesome = input.get(f);
+				switch (awesome) {
+				case "(":
+					doop++;
+					break;
+				case "[":
+					scoop++;
+					break;
+				case "{":
+					foop++;
+					break;
+				case ")":
+					doop--;
+					break;
+				case "]":
+					scoop--;
+					break;
+				case "}":
+					foop--;
+					break;
+				default: // do nothing
+					break;
+				}
+				if (doop < 0 || scoop < 0 || foop < 0) {
+					throw new SyntaxErrorException(
+							"The order of your parentheses, brackets, or braces is off.\nMake sure you open a set of parenthesis/brackets/braces before you close them.");
+				}
+			}
+			if (NONBRACES.indexOf(input.get(input.size() - 1)) != -1) {
+				throw new SyntaxErrorException("The input can't end in an operator");
+			}
+			return input;
+		} catch (SyntaxErrorException ex) {
+			// System.out.println(ex);
+			return input;
+		}
 	}
 
 	/**

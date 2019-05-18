@@ -167,6 +167,9 @@ public class GamePanel extends Panel {
 		btnNextGame.addActionListener(new NextGameListener());
 		btnNextGame.setVisible(true);
 		this.add(btnNextGame);
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 	private URL getCardPath(int rank, int suit) throws URISyntaxException, MalformedURLException {
@@ -248,7 +251,6 @@ public class GamePanel extends Panel {
 			}
 		} catch (Exception e) {
 			lblCalculatedNumber.setText("Syntax Error");
-			e.printStackTrace();
 			return false;
 		}
 	}
