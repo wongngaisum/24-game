@@ -8,7 +8,7 @@ public class LeaderBoardPanel extends Panel {
     private JScrollPane scrollPane;
     private DefaultTableModel model;
 
-    public LeaderBoardPanel(String name, boolean status, RemoteInterface remote, Client client) {
+    public LeaderBoardPanel(String name, boolean status, RemoteInt remote, Client client) {
         super(name, status, remote, client);
     }
 

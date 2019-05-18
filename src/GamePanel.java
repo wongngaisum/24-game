@@ -25,7 +25,7 @@ public class GamePanel extends Panel {
 
 	private ArrayList<Card> cards;
 
-	public GamePanel(String name, boolean status, RemoteInterface remote, Client client) {
+	public GamePanel(String name, boolean status, RemoteInt remote, Client client) {
 		super(name, status, remote, client);
 	}
 

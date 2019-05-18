@@ -10,7 +10,7 @@ public class LoginPanel extends Panel {
     private JButton btnLogin;
     // private boolean loginSuccess;
 
-    public LoginPanel(String name, boolean status, RemoteInterface remote, Client client) {
+    public LoginPanel(String name, boolean status, RemoteInt remote, Client client) {
         super(name, status, remote, client);
     }
 

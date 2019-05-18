@@ -13,7 +13,7 @@ public class Client implements Runnable {
 	private JFrame frame;
 	private JTabbedPane tabs;
 	private ArrayList<Panel> panels = new ArrayList<>();
-	private RemoteInterface remote;
+	private RemoteInt remote;
 	private LoginPanel loginPanel;
 	private UserProfilePanel userProfilePanel;
 	private GamePanel gamePanel;
@@ -39,7 +39,7 @@ public class Client implements Runnable {
 	private Client(String host) {
 		try {
 			Registry registry = LocateRegistry.getRegistry(host);
-			remote = (RemoteInterface) registry.lookup("Server");
+			remote = (RemoteInt) registry.lookup("Server");
 			jmsClient = new JMSClient(host, this);
 		} catch (Exception e) {
 			System.err.println("Failed accessing RMI: " + e);
@@ -63,6 +63,7 @@ public class Client implements Runnable {
 					remote.logout(user);
 				} catch (Exception e) {
 					System.err.println("Failed accessing RMI: " + e);
+					e.printStackTrace();
 				}
 			}
 		});

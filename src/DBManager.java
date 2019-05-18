@@ -16,7 +16,7 @@ public class DBManager {
 
 	public DBManager() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		// DB
-		Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		conn = DriverManager
 				.getConnection("jdbc:mysql://" + DB_HOST + "/" + DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASS);
 		initialize();

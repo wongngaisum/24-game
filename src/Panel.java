@@ -3,10 +3,10 @@ import javax.swing.*;
 public abstract class Panel extends JPanel {
     private String name;
     private boolean status;
-    private RemoteInterface remote;
+    private RemoteInt remote;
     private Client client;
 
-    public Panel(String name, boolean status, RemoteInterface remote, Client client) {
+    public Panel(String name, boolean status, RemoteInt remote, Client client) {
         this.name = name;
         this.status = status;
         this.remote = remote;
@@ -26,7 +26,7 @@ public abstract class Panel extends JPanel {
         this.status = status;
     }
 
-    public RemoteInterface getRemote() {
+    public RemoteInt getRemote() {
         return remote;
     }
 

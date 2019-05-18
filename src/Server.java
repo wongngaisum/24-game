@@ -1,5 +1,6 @@
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.naming.NamingException;
 
-public class Server extends UnicastRemoteObject implements RemoteInterface {
+public class Server extends UnicastRemoteObject implements RemoteInt {
 	private DBManager db;
 	private JMSServer jmsServer;
 
@@ -34,21 +35,29 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 		try {
 			System.out.println("Please set DB_USER = root, DB_PASS = \"\", DB_Name = c0402 if you did not");
 			System.out.println("Please create jms/JPoker24GameConnectionFactory, jms/JPoker24GameQueue, jms/JPoker24GameTopic if you did not");
-			
-			// Security policy
-			// System.setProperty("java.security.policy", "file:./security.policy");
-			// System.setSecurityManager(new SecurityManager());
 
 			// RMI
 			Server app = new Server();
+			app.startRMIRegistry();
 			Naming.rebind("Server", app);
 
+			// Security policy
+			System.setSecurityManager(new SecurityManager());
+			
 			System.out.println("Service registered");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void startRMIRegistry() {
+		try {
+			LocateRegistry.createRegistry(1099);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public RMIMessage login(User user) throws RemoteException {
 		try {
@@ -94,18 +103,34 @@ public class Server extends UnicastRemoteObject implements RemoteInterface {
 	public RMIMessage logout(User user) throws RemoteException {
 		try {
 			db.logout(user.getUsername());
-			for (GameRoom room : gameRooms) {
-				if (room.havePlayer(user)) {
-					room.removePlayer(user);
-					System.out.println("Removed player " + user.getUsername() + " from room");
-					
-					if (room.isEmpty()) {
-						gameRooms.remove(room);
-						System.out.println("Removed a room");
-						break;
+			// User waiting for players
+			if (waitingList.contains(user)) {
+				if (waitingList.size() == 1) {
+					timeout = false;
+				}
+
+				if (waitingRoomTimers.containsKey(user)) {
+					waitingRoomTimers.get(user).interrupt();
+					waitingRoomTimers.remove(user);
+				}
+				waitingList.remove(waitingList.indexOf(user));
+				
+				System.out.println("Removed player " + user.getUsername() + " from (waiting) list");
+			} else {	// Started game
+				for (GameRoom room : gameRooms) {
+					if (room.havePlayer(user)) {
+						room.removePlayer(user);
+						System.out.println("Removed player " + user.getUsername() + " from room");
+						
+						if (room.isEmpty()) {
+							gameRooms.remove(room);
+							System.out.println("Removed a room");
+							break;
+						}
 					}
 				}
 			}
+
 			System.out.println("User " + user.getUsername()  + " logged out");
 			return new RMIMessage("Logged out successfully", true);
 		} catch (SQLException e) {

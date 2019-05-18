@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class LogoutPanel extends Panel {
     private JButton btnLogout;
 
-    public LogoutPanel(String name, boolean status, RemoteInterface remote, Client client) {
+    public LogoutPanel(String name, boolean status, RemoteInt remote, Client client) {
         super(name, status, remote, client);
     }
 

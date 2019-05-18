@@ -8,7 +8,7 @@ public class UserProfilePanel extends Panel {
     private JLabel lblAvgTimeToWin;
     private JLabel lblRank;
 
-    public UserProfilePanel(String name, boolean status, RemoteInterface remote, Client client) {
+    public UserProfilePanel(String name, boolean status, RemoteInt remote, Client client) {
         super(name, status, remote, client);
     }
 
